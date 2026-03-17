@@ -28,9 +28,11 @@ You should see two directories:
 Your first task is to write the `Dockerfile's` for the provided source code.
 
 **Task 2.1: The Frontend Container**
+
 Inside the `/frontend` directory, create a `Dockerfile` that uses an `nginx:alpine` base image to serve the `index.html` file.
 
 **Task 2.2: The API Container**
+
 Inside the `/api` directory, create an optimized **Multi-Stage `Dockerfile`** for the Node.js application. 
 * *Requirement 1:* Utilize Layer Caching for the `package.json` dependencies.
 * *Requirement 2:* Use `node:18-alpine` for both the build and production stages.
