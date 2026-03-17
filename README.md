@@ -41,7 +41,7 @@ Inside the `/api` directory, create an optimized **Multi-Stage `Dockerfile`** fo
 ### Phase 3: The Network & Orchestration Challenge
 Now that your containers can be built, you must orchestrate the ecosystem and design the network topology. 
 
-Create a `docker-compose.yml` file in the root directory. You must define **four** services: your frontend, your API, your Redis cache, and an API Gateway (using the `jc21/nginx-proxy-manager:latest` image).
+Start with the `docker-compose.yml` file that is present in the root directory. You must define **three** more services along the API Gateway (`jc21/nginx-proxy-manager:latest` image): the frontend, the API and the Redis cache.
 
 **Focus on Docker Networking:**
 In a Compose environment, Docker automatically creates a custom bridge network for your stack. This provides internal DNS resolution. 
