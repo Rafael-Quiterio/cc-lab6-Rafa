@@ -34,4 +34,44 @@ jobs:
       with:
         context: ./frontend
         push: true
-        tags: ghcr.io/${{ github.actor }}/cloud-frontend:latest
+        tags: ghcr.io/${{ github.actor }}/cloud-frontend:latestname: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 1. Transformar o nome em minúsculo de forma garantida
+      - name: Set lowercase owner
+        run: |
+          OWNER_LC=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          echo "OWNER_LC=$OWNER_LC" >> $GITHUB_ENV
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_PAT }}
+
+      # 2. Build e Push da API (Note a barra '/' depois do OWNER_LC)
+      - name: Build and push API
+        uses: docker/build-push-action@v5
+        with:
+          context: ./api
+          push: true
+          tags: ghcr.io/${{ env.OWNER_LC }}/cloud-api:latest
+
+      # 3. Build e Push do Frontend
+      - name: Build and push Frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: ghcr.io/${{ env.OWNER_LC }}/cloud-frontend:latest
